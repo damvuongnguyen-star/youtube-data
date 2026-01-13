@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Crawler Tool</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; display: flex; flex-direction: column; align-items: center; padding-top: 50px; }
+        h1 { color: #333; }
+        .box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; margin-bottom: 20px; text-align: center; }
+        input { padding: 12px; width: 80%; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 15px; outline: none; }
+        button { padding: 12px 25px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #0056b3; transform: scale(1.05); }
+        .btn-google { background: #db4437; }
+        .btn-google:hover { background: #c53929; }
+    </style>
+</head>
+<body>
+
+    <h1>YouTube Data Crawler 🚀</h1>
+
+    <div class="box">
+        <h2>🔍 Quét Kênh Public</h2>
+        <p style="color:#666; font-size: 13px; margin-bottom: 20px;">Nhập link kênh để xem Sub/View/Video</p>
+        
+        <form action="/api/publicscan" method="POST">
+            <input type="text" name="url" placeholder="VD: https://youtube.com/@MixiGaming" required>
+            <button type="submit">Quét Ngay</button>
+        </form>
+    </div>
+
+    <div class="box">
+        <h2>🔑 Đăng nhập Chủ Kênh</h2>
+        <p style="color:#666; font-size: 13px; margin-bottom: 20px;">Xem Email, Doanh thu & dữ liệu ẩn</p>
+        <a href="/api/auth/google">
+            <button class="btn-google">Login with Google</button>
+        </a>
+    </div>
+
+</body>
+</html>

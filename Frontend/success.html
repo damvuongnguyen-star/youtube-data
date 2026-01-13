@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả phân tích</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        
+        .container { background: white; width: 100%; max-width: 600px; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        
+        /* Phần Header chung */
+        .header { text-align: center; border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        .avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .name { font-size: 24px; font-weight: bold; margin: 10px 0 5px; color: #333; }
+        .meta { color: #666; font-size: 14px; }
+
+        /* Phần thống kê cơ bản (Public + Private đều thấy) */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: #f9f9f9; padding: 15px; border-radius: 10px; text-align: center; }
+        .stat-val { display: block; font-size: 18px; font-weight: bold; color: #333; }
+        .stat-label { font-size: 12px; color: #777; text-transform: uppercase; }
+
+        /* 🔥 Phần RIÊNG TƯ (Chỉ Private mới thấy) 🔥 */
+        #privateSection { display: none; background: #fff4e5; border: 1px dashed #ff9800; padding: 15px; border-radius: 10px; margin-top: 20px; }
+        .private-title { color: #d84315; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .private-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .money-val { color: #2e7d32; font-size: 20px; } /* Màu tiền */
+
+        .btn { display: block; width: 100%; padding: 12px; background: #333; color: white; text-align: center; text-decoration: none; border-radius: 8px; margin-top: 20px; }
+        .btn:hover { background: #555; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <img id="imgAvatar" src="" alt="Avatar" class="avatar">
+            <h1 id="txtName" class="name">...</h1>
+            <p id="txtId" class="meta">...</p>
+            <p id="txtEmail" style="color: blue; display:none; font-weight:500;"></p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span id="txtSub" class="stat-val">0</span>
+                <span class="stat-label">Subscribers</span>
+            </div>
+            <div class="stat-box">
+                <span id="txtView" class="stat-val">0</span>
+                <span class="stat-label">Views</span>
+            </div>
+            <div class="stat-box">
+                <span id="txtVideo" class="stat-val">0</span>
+                <span class="stat-label">Videos</span>
+            </div>
+        </div>
+
+        <div id="privateSection">
+            <div class="private-title">🔒 Dữ liệu chủ sở hữu (Private)</div>
+            <div class="private-grid">
+                <div class="stat-box" style="background: white;">
+                    <span class="stat-val money-val">$$$</span>
+                    <span class="stat-label">Doanh thu (Est)</span>
+                </div>
+                <div class="stat-box" style="background: white;">
+                    <span class="stat-val">Chưa cấp quyền</span>
+                    <span class="stat-label">CPM / RPM</span>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">
+                * Tính năng phân tích doanh thu cần quyền YouTube Analytics (Đang phát triển).
+            </p>
+        </div>
+
+        <a href="/" class="btn">Quay về trang chủ</a>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const fmt = (num) => new Intl.NumberFormat().format(num);
+
+        if(params.has('name')) {
+            // Fill Public Data
+            document.getElementById('imgAvatar').src = params.get('avatar');
+            document.getElementById('txtName').innerText = params.get('name');
+            document.getElementById('txtId').innerText = "@" + params.get('id'); 
+            document.getElementById('txtSub').innerText = fmt(params.get('subs'));
+            document.getElementById('txtView').innerText = fmt(params.get('views'));
+            document.getElementById('txtVideo').innerText = fmt(params.get('videos'));
+
+            // Check Private Data
+            const email = params.get('email');
+            
+            if (email && email !== 'undefined') {
+                //  PRIVATE USER
+                // 1. Hiện Email
+                const elEmail = document.getElementById('txtEmail');
+                elEmail.innerText = email;
+                elEmail.style.display = 'block';
+
+                //  khu vực Private
+                document.getElementById('privateSection').style.display = 'block';
+            } else {
+            }
+
+        } else {
+            document.querySelector('.container').innerHTML = "<h3 style='text-align:center'>Không có dữ liệu!</h3><a href='/' style='display:block;text-align:center'>Quay lại</a>";
+        }
+    </script>
+</body>
+</html>
